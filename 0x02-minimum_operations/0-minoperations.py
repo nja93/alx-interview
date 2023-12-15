@@ -4,9 +4,11 @@
 
 def minOperations(n):
     """
-    This function gets fewest num  of operations needed to result in exactly n H characters
+    This function gets fewest num  of operations needed to
+      result in exactly n H characters
     """
-    # it is impossible to achieve a value lower than 2 because the n of operations copy and paste
+    # it is impossible to achieve a value lower than 2 because
+    # the n of operations copy and paste
     # threfore 0 is returned
     if (n < 2):
         return 0
