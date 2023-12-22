@@ -7,12 +7,10 @@ representing the Pascal's triangle of n.
 
 def pascal_triangle(n):
     """Pascals triangle of n
-
     Args:
       n (int): height of triangle
-
     Returns:
-      list of lists of integers representing the Pascal’s triangle of n
+      list of lists of integers representing the Pascal triangle of n
     """
     def factorial(n):
         if n <= 1:
