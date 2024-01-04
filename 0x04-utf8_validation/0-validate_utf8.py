@@ -3,30 +3,28 @@
 Method that determines if a given data set represents
 a valid UTF-8 encoding
 """
-from typing import List
 
 
-def validUTF8(data: List[int]) -> bool:
+def validUTF8(data):
     """
+    Returns: True if data is a valid UTF-8 encoding,
+    else return False
+    A character in UTF-8 can be 1 to 4 bytes long
     """
-    num_bytes = 0
-
-    for byte in data:
-        if num_bytes == 0:
-            if (byte >> 7) == 0b0:
+    bytes = 0
+    for num in data:
+        bitcodes = format(num, '#010b')[-8:]
+        if bytes == 0:
+            for bit in bitcodes:
+                if bit == '0':
+                    break
+                bytes += 1
+            if bytes == 0:
                 continue
-            elif (byte >> 5) == 0b110:
-                num_bytes = 1
-            elif (byte >> 4) == 0b1110:
-                num_bytes = 2
-            elif (byte >> 3) == 0b11110:
-                num_bytes = 3
-            else:
+            if bytes == 1 or bytes > 4:
                 return False
         else:
-            if (byte >> 6) == 0b10:
-                num_bytes -= 1
-            else:
+            if not (bitcodes[0] == '1' and bitcodes[1] == '0'):
                 return False
-
-    return num_bytes == 0
+        bytes -= 1
+    return bytes == 0
