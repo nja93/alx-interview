@@ -1,15 +1,15 @@
 #!/usr/bin/python3
 """
-this program solves the n queens problem
+A program that solves the N queens problem
 """
 
 import sys
 
 
 def nqueens(n):
-    """Solve the N queens problem"""
+    """Solves the N queens problem"""
     def can_place(pos, ocuppied_positions):
-        """Checkif a queen can be placed in a position"""
+        """Checks if a queen can be placed in a position"""
         for i in range(ocuppied_positions):
             occupied = board[i] == pos
             occupied = occupied or board[i] - pos == ocuppied_positions - i
@@ -19,7 +19,7 @@ def nqueens(n):
         return True
 
     def place_queen(n, ocuppied_positions, result):
-        """Place a queen in a position and then call itself recursively"""
+        """Places a queen in a position and calls itself recursively"""
         if ocuppied_positions == n:
             result.append(board[:])
             return
