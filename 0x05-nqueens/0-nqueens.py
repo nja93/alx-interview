@@ -49,4 +49,3 @@ if __name__ == "__main__":
     solutions = nqueens(n)
     for solution in solutions:
         print([[i, j] for i, j in enumerate(solution)])
-        
