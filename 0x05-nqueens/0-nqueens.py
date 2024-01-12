@@ -1,51 +1,43 @@
 #!/usr/bin/python3
-"""
-A program that solves the N queens problem
-"""
-
+""" N queens """
 import sys
 
 
-def nqueens(n):
-    """Solves the N queens problem"""
-    def can_place(pos, ocuppied_positions):
-        """Checks if a queen can be placed in a position"""
-        for i in range(ocuppied_positions):
-            occupied = board[i] == pos
-            occupied = occupied or board[i] - pos == ocuppied_positions - i
-            occupied = occupied or board[i] - pos == i - ocuppied_positions
-            if (occupied):
-                return False
-        return True
+if len(sys.argv) > 2 or len(sys.argv) < 2:
+    print("Usage: nqueens N")
+    exit(1)
 
-    def place_queen(n, ocuppied_positions, result):
-        """Places a queen in a position and calls itself recursively"""
-        if ocuppied_positions == n:
-            result.append(board[:])
-            return
-        for i in range(n):
-            if can_place(i, ocuppied_positions):
-                board[ocuppied_positions] = i
-                place_queen(n, ocuppied_positions + 1, result)
+if not sys.argv[1].isdigit():
+    print("N must be a number")
+    exit(1)
 
-    result = []
-    board = [-1] * n
-    place_queen(n, 0, result)
-    return result
+if int(sys.argv[1]) < 4:
+    print("N must be at least 4")
+    exit(1)
+
+n = int(sys.argv[1])
 
 
-if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: nqueens N")
-        sys.exit(1)
-    try:
-        n = int(sys.argv[1])
-    except ValueError:
-        print("N must be a number")
-        sys.exit(1)
-    if n < 4:
-        print("N must be at least 4")
-        sys.exit(1)
-    solutions = nqueens(n)
-    for solution in solutions:
-        print([[i, j] for i, j in enumerate(solution)])
+def queens(n, i=0, a=[], b=[], c=[]):
+    """ find possible positions """
+    if i < n:
+        for j in range(n):
+            if j not in a and i + j not in b and i - j not in c:
+                yield from queens(n, i + 1, a + [j], b + [i + j], c + [i - j])
+    else:
+        yield a
+
+
+def solve(n):
+    """ solve """
+    k = []
+    i = 0
+    for solution in queens(n, 0):
+        for s in solution:
+            k.append([i, s])
+            i += 1
+        print(k)
+        k = []
+        i = 0
+
+solve(n)
