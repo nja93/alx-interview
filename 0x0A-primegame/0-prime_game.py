@@ -1,10 +1,14 @@
 #!/usr/bin/python3
-"""check for the winner of the prime game
+"""Function to check for the winner of the prime game
 """
 
 
 def isWinner(x, nums):
     """Return the winner of the prime game
+
+    Args:
+        x (int): is the number of rounds
+        nums (list[int]): array of n (number of primes to test)
     """
     primes = [2]
 
@@ -24,7 +28,8 @@ def isWinner(x, nums):
         return True
 
     def pickPrimeAndFactors(lst):
-        """Remove 1st prime number in a list & factors
+        """Remove the first prime number in a list
+        and its factors
         """
         prime = None
         for i in lst:
