@@ -1,63 +1,42 @@
 #!/usr/bin/python3
-"""Function to check for the winner of the prime game
-"""
+"""Maria and Ben are playing a game"""
 
 
 def isWinner(x, nums):
-    """Return the winner of the prime game
-
-    Args:
-        x (int): is the number of rounds
-        nums (list[int]): array of n (number of primes to test)
+    """x - rounds
+    nums - numbers list
     """
-    primes = [2]
+    if x <= 0 or nums is None:
+        return None
+    if x != len(nums):
+        return None
 
-    def isPrime(x):
-        """Return whether a number is prime or not
-        """
-        if x < 2:
-            return False
-        if x in primes:
-            return True
-        if primes[-1] > x:
-            return False
-        for i in range(2, int(x ** 0.5) + 1):
-            if x % i == 0:
-                return False
-        primes.append(x)
-        return True
+    ben = 0
+    maria = 0
 
-    def pickPrimeAndFactors(lst):
-        """Remove the first prime number in a list
-        and its factors
-        """
-        prime = None
-        for i in lst:
-            if isPrime(i):
-                prime = i
-                break
+    a = [1 for x in range(sorted(nums)[-1] + 1)]
+    a[0], a[1] = 0, 0
+    for i in range(2, len(a)):
+        rm_multiples(a, i)
 
-        if prime is None:
-            return None
-
-        return [i for i in lst if i % prime != 0]
-
-    players = [0, 0]
-
-    for i in range(x):
-        turn = 0
-        n = list(range(1, nums[i] + 1))
-
-        while True:
-            n = pickPrimeAndFactors(n)
-            turn += 1
-            if n is None:
-                players[(turn) % 2] += 1
-                break
-
-    if players[0] > players[1]:
-        return "Maria"
-    elif players[1] > players[0]:
+    for i in nums:
+        if sum(a[0:i + 1]) % 2 == 0:
+            ben += 1
+        else:
+            maria += 1
+    if ben > maria:
         return "Ben"
-
+    if maria > ben:
+        return "Maria"
     return None
+
+
+def rm_multiples(ls, x):
+    """removes multiple
+    of primes
+    """
+    for i in range(2, len(ls)):
+        try:
+            ls[i * x] = 0
+        except (ValueError, IndexError):
+            break
